@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>كوكو تيستي | المنيو</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lalezar&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FBF7EF; --card:#FFFFFF; --ink:#1D2B2A; --muted:#6B7776;
+  --brand:#B3141C; --accent:#F2A93B; --hot:#B3141C; --line:#E7DFCF;
+}
+@media (prefers-color-scheme: dark){
+  :root{--bg:#0E1C1C;--card:#152828;--ink:#F3EEE2;--muted:#9DB0AE;--brand:#F2A93B;--accent:#F2A93B;--hot:#FF7A5C;--line:#244040}
+}
+*{box-sizing:border-box;margin:0}
+body{font-family:'Tajawal',Tahoma,sans-serif;background:var(--bg);color:var(--ink);line-height:1.7}
+button{font:inherit;cursor:pointer;border:0;color:inherit;background:none}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+
+header{background:#B3141C;color:#FBF7EF;padding:44px 20px 56px;text-align:center}
+header h1{font-family:'Lalezar','Tajawal',sans-serif;font-size:clamp(2.6rem,9vw,4.4rem);font-weight:400;line-height:1.1}
+header p{color:#F2A93B;margin-top:6px}
+
+.tools{position:sticky;top:0;z-index:5;background:var(--bg);padding:12px 16px;border-bottom:1px solid var(--line);max-width:900px;margin:-26px auto 0;border-radius:16px 16px 0 0}
+#q{width:100%;padding:12px 16px;border:1.5px solid var(--line);border-radius:12px;background:var(--card);color:var(--ink);font:inherit}
+.chips{display:flex;gap:8px;overflow-x:auto;padding-top:10px;scrollbar-width:none}
+.chip{padding:6px 16px;border-radius:99px;border:1.5px solid var(--line);white-space:nowrap;background:var(--card)}
+.chip[aria-pressed=true]{background:var(--brand);color:#FBF7EF;border-color:var(--brand)}
+@media (prefers-color-scheme: dark){.chip[aria-pressed=true]{color:#0E1C1C}}
+
+main{max-width:900px;margin:0 auto;padding:16px 16px 110px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
+.item{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;display:flex;gap:14px;align-items:center}
+.emoji{font-size:2.4rem;width:64px;height:64px;display:grid;place-items:center;background:var(--bg);border-radius:14px;flex:none}
+.info{flex:1;min-width:0}
+.info h3{font-size:1.05rem}
+.info p{color:var(--muted);font-size:.88rem;line-height:1.5}
+.row{display:flex;justify-content:space-between;align-items:center;margin-top:8px}
+.price{font-weight:700;color:var(--hot)}
+.add{background:var(--brand);color:#FBF7EF;border-radius:10px;padding:4px 14px;font-weight:700}
+@media (prefers-color-scheme: dark){.add{color:#0E1C1C}}
+.add:active{transform:scale(.95)}
+.empty{text-align:center;color:var(--muted);padding:40px 0}
+
+.bar{position:fixed;inset:auto 0 0 0;padding:12px 16px calc(12px + env(safe-area-inset-bottom,0px));background:var(--brand);color:#FBF7EF;display:none;justify-content:space-between;align-items:center;z-index:10}
+.bar.on{display:flex}
+@media (prefers-color-scheme: dark){.bar{color:#0E1C1C}}
+.bar button{background:var(--accent);color:#1D2B2A;padding:8px 20px;border-radius:10px;font-weight:700}
+
+dialog{width:min(440px,92vw);border:0;border-radius:18px;padding:20px;background:var(--card);color:var(--ink);margin:auto}
+dialog::backdrop{background:rgba(0,0,0,.5)}
+dialog h2{font-family:'Lalezar','Tajawal',sans-serif;font-weight:400;font-size:1.8rem;margin-bottom:8px}
+.line{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px dashed var(--line)}
+.qty button{width:28px;height:28px;border-radius:8px;background:var(--bg);font-weight:700}
+.qty span{display:inline-block;min-width:24px;text-align:center}
+.total{display:flex;justify-content:space-between;font-weight:700;font-size:1.15rem;margin:14px 0}
+.actions{display:flex;gap:8px}
+.actions a,.actions button{flex:1;text-align:center;padding:10px;border-radius:10px;font-weight:700;text-decoration:none}
+.wa{background:#25D366;color:#073B1C}
+.close{background:var(--bg)}
+footer{text-align:center;color:var(--muted);font-size:.8rem;padding:0 16px 120px}
+.cat{font-family:'Lalezar','Tajawal',sans-serif;font-weight:400;font-size:1.8rem;color:var(--brand);margin:26px 0 10px}
+.opts{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.opt{padding:2px 12px;border:1.5px solid var(--line);border-radius:8px;font-size:.85rem;background:var(--bg)}
+.opt[aria-pressed=true]{background:var(--brand);color:#FBF7EF;border-color:var(--brand)}
+@media (prefers-color-scheme: dark){.opt[aria-pressed=true]{color:#0E1C1C}}
+.item{align-items:flex-start}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>كوكو تيستي</h1>
+  <p>مشاوي · فطير · بيتزا · برجر</p>
+</header>
+
+<div class="tools">
+  <input id="q" type="search" placeholder="دوّر على أكلة..." aria-label="بحث في المنيو">
+  <div class="chips" id="chips" role="group" aria-label="التصنيفات"></div>
+</div>
+
+<main>
+  <div class="grid" id="grid"></div>
+  <p class="empty" id="empty" hidden>مفيش نتايج. جرّب كلمة تانية.</p>
+</main>
+
+<footer>ههيا - الطريق العام، مقابل هندسة الري<br>نسخة تجريبية (Demo)</footer>
+
+<div class="bar" id="bar">
+  <span id="barTxt"></span>
+  <button id="open">عرض الطلب</button>
+</div>
+
+<dialog id="dlg">
+  <h2>طلبك</h2>
+  <div id="lines"></div>
+  <div class="total"><span>الإجمالي</span><span id="total"></span></div>
+  <div class="actions">
+    <a class="wa" id="wa" target="_blank" rel="noopener">ابعت واتساب</a>
+    <button class="close" id="close">كمّل اختيار</button>
+  </div>
+</dialog>
+
+<script>
+/* ====== عدّل هنا بس ====== */
+const PHONE = "201119977761";   // رقم الواتساب بصيغة دولية بدون +
+const CURRENCY = "ج.م";
+// P(["أحجام"], [["اسم", سعر1, سعر2, ...]]) — الأسعار بنفس ترتيب الأحجام
+const P = (L, rows) => rows.map(([n, ...v]) => [n, Object.fromEntries(L.map((l,i) => [l, v[i]]).filter(x => x[1]))]);
+const BX = "بطاطس + عيش + تومية + كولسلو + كاتشب + بيبسي";
+const MENU = [
+ {cat:"مشاوي", icon:"🍖", items:P(["ربع","تلت","نصف","كيلو"],[
+  ["كفتة",195,240,360,700],["كباب",225,290,435,850],["طرب",225,290,435,850],
+  ["ستيك عجالي",225,290,435,850],["كبدة مشوية",195,240,360,700],["سجق",170,215,310,600],["مشكل لحوم",220,280,400,800]])},
+ {cat:"فراخ", icon:"🍗", items:[
+  ["فراخ مسحب",{"نصف":160,"كيلو":300},"سلطات + عيش"],
+  ["فراخ شيش",{"نصف":160,"كيلو":300},"سلطات + عيش"]]},
+ {cat:"وجبات ال 99", icon:"🔥", items:[
+  ["ربع فرخة + أرز",99,"عيش وسلطات مع الوجبة"],
+  ["١ كفتة + شيش طاووق + أرز",99,"عيش وسلطات مع الوجبة"],
+  ["٣ كفتة + أرز",99,"عيش وسلطات مع الوجبة"]]},
+ {cat:"الوجبات", icon:"🍽️", items:[
+  ["وجبة البركة",110,"مشاوي + أرز + سلطات + عيش"],
+  ["وجبة الترفير",129,"كفتة + ربع فرخة + أرز + سلطات + عيش"],
+  ["وجبة الرايق",172,"ربع فرخة + كفتة + أرز + سلطات + عيش"]]},
+ {cat:"الصواني", icon:"🥘", items:[
+  ["صينية ٥٥",585,"أرز + سلطات + عيش"],
+  ["صينية الراج",699,"أرز + سلطات + عيش"],
+  ["صينية الوحوش",1099,"أرز + سلطات + عيش"]]},
+ {cat:"سندوتشات", icon:"🥙", items:P(["كبير","صغير"],[
+  ["كفتة",60,35],["طرب",80],["لحمة استيك",90,55],["كرسبي",60,30],["شيش طاووق",60,35],["سجق مشوي",65,30],["كبدة مشوية",60,30]])},
+ {cat:"اسكندراني وحواوشي", icon:"🌯", items:[
+  ...P(["فينو","شامي"],[["سجق اسكندراني",25,17],["كبدة اسكندراني",25,17]]),
+  ...P(["كبير","وسط","صغير"],[["حواوشي",80,60,35],["حواوشي جبنة",90,70,45]])]},
+ {cat:"بيتزا", icon:"🍕", items:P(["كبير","وسط","صغير"],[
+  ["مارجريتا",115,85,65],["خضروات",135,110,75],["مشكل جبن",145,115,85],["هوت دوج",169,130,95],
+  ["بيبروني",165,130,95],["سوبر سوبريم",188,145,98],["لحمة مفرومة",190,148,100],["مشكل لحوم",200,160,110],
+  ["تشيكن كرسبي",190,160,110],["تشيكن كرسبي رانش",190,160,110],["تشيكن كرسبي باربكيو",190,160,110],
+  ["مشكل فراخ كرسبي",205,162,115],["تشيكن جريل رانش",205,160,115],["تشيكن جريل باربكيو",205,160,115]])},
+ {cat:"فطير حادق", icon:"🥧", items:P(["سوبر","كبير","وسط","صغير","رول"],[
+  ["مشكل جبن",175,165,135,85,70],["هوت دوج",215,183,155,110,85],["لحم مفروم",233,189,160,120,96],
+  ["سجق كبرى",243,198,166,130,97],["بسطرمة كبرى",230,195,165,120,98],["سجق بسطرمة كبرى",265,225,188,141,120],
+  ["مشكل لحوم",277,228,188,140,120],["تشيكن كرسبي",250,210,172,135,104],["تشيكن كرسبي رانش",248,209,167,135,103],
+  ["تشيكن كرسبي باربكيو",248,209,167,136,103],["مشكل فراخ كرسبي",270,230,188,150,127],
+  ["تشيكن جريل رانش",274,243,168,147,112],["تشيكن جريل باربكيو",274,243,168,147,115]])},
+ {cat:"فطير حلو", icon:"🍯", items:P(["كبير","صغير"],[
+  ["بغاشة بالسكر",75,55],["كاستر مكسرات",85,65],["شيكولاتة موز",129,105],["شيكولاتة بندق",130,106],
+  ["شيكولاتة أوريو",135,115],["لوتس",128,105],["الفور سيزون",150,120]])},
+ {cat:"كريب", icon:"🌮", items:[
+  ...P(["كبير","وسط","صغير"],[
+  ["هوت دوج",105,90,58],["سجق مشوي",115,100,75],["مشكل لحوم",135,110,77],["بانيه فريش",137,116,80],
+  ["استربس",130,110,75],["فاهيتا دجاج",140,110],["زنجر",130,110,75],["شيش طاووق",132,115,85],["مشكل دجاج",155,125,106]]),
+  ["كريزي كريب",129]]},
+ {cat:"مكرونات", icon:"🍝", items:[
+  ["مكرونة تشيكن",95,"وايت صوص"],["مكرونة نجرسكو سجق",90,"وايت صوص"],
+  ...P(["كبير","صغير"],[["مكرونة سجق",65,45],["مكرونة كبدة",65,45]])]},
+ {cat:"استربس", icon:"🍤", items:[
+  ["استربس بوكس",100,"٣ قطع استربس + "+BX+" صغير"],
+  ["سوبر استربس بوكس",150,"٥ قطع استربس + "+BX],
+  ["جامبو استربس بوكس",195,"٧ قطع استربس + "+BX],
+  ["وجبة الأطفال",75,"٢ قطعة استربس + بطاطس + عيش + كولسلو + عصير"]]},
+ {cat:"برجر وبطاطس", icon:"🍔", items:[
+  ["كمبو كلاسيك بيف برجر",90,"قطعة برجر لحم بلدي + بطاطس + بيبسي"],
+  ["كمبو دبل كلاسيك بيف برجر",150,"قطعتين برجر لحم بلدي + بطاطس + بيبسي"],
+  ["كمبو كلاسيك تشيكن",90,"قطعة فراخ كرسبي + بطاطس + بيبسي"],
+  ["كمبو دبل كلاسيك تشيكن",150,"قطعتين فراخ كرسبي + بطاطس + بيبسي"],
+  ["كوكو برجر",175,"٢ برجر بيف أو تشيكن + بطاطس + ٢ كولسلو + ٢ بيبسي"],
+  ["جامبو كوكو برجر",320,"٤ برجر بيف أو تشيكن + بطاطس + ٤ كولسلو + ٢ لتر بيبسي"],
+  ["برجر أطفال",70,"برجر لحم بلدي أو كرسبي + بطاطس + عصير"],
+  ["بطاطس صوص شيدر",55],["بطاطس تشيكن سوبريم",60]]},
+ {cat:"بروستد", icon:"🍗", items:[
+  ["كوكو قطعتين",100,"قطعتين دجاج + "+BX+" صغير"],
+  ["كوكو ٣ قطع",150,"٣ قطع دجاج + "+BX+" صغير"],
+  ["كوكو ٤ قطع",190,"٤ قطع دجاج + "+BX],
+  ["كوكو ٦ قطع",275,"٦ قطع دجاج + "+BX],
+  ["كوكو ٩ قطع",365,"٩ قطع دجاج + بطاطس + عيش + كولسلو + تومية + كاتشب + لتر بيبسي"],
+  ["كوكو ١٢ قطعة",450,"١٢ قطعة دجاج + بطاطس + عيش + كولسلو + تومية + كاتشب + لتر بيبسي"]]},
+ {cat:"ميكس", icon:"🍱", items:[
+  ["ميجا ميكس",200,"قطعتين دجاج + ٣ استربس + أرز + عيش + بطاطس + كولسلو + تومية"],
+  ["جولدن ميكس",280,"٣ قطع دجاج + ٣ استربس + ٢ أرز + عيش + بطاطس + كولسلو + بيبسي صغير"],
+  ["كوكو ميكس",380,"٦ قطع دجاج + ٣ استربس + ٣ أرز + عيش + بطاطس + كولسلو + لتر بيبسي"],
+  ["ريزو وان",60,"أرز + قطعة استربس + صوص + بطاطس"],
+  ["ريزو كوكو",85,"أرز + ٢ قطعة استربس + بطاطس + كولسلو + بيبسي"]]},
+ {cat:"رول وزنجر", icon:"🌯", items:[
+  ["كلاسيك رول",65],["تشيكن تشيز",85],["تشيكن تشيز لافرز",90],["زنجر سوبريم",100]]},
+ {cat:"إضافات", icon:"➕", items:[
+  ["أرز",10],["سلطات",35],["مكرونة",20],["جبنة موتزريلا",35],["صوصات",10],["صدور فراخ",25],
+  ...P(["كبير","صغير"],[["بطاطس",40,25]])]},
+];
+/* ========================== */
+
+const ALL = "الكل";
+const ITEMS = []; let uid = 0;
+MENU.forEach(c => c.items.forEach(([name, p, desc]) =>
+  ITEMS.push({id: uid++, cat: c.cat, name, desc: desc || "", opts: typeof p === "number" ? [["", p]] : Object.entries(p)})));
+
+const cart = {}, sel = {};        // cart: "id|optIndex" -> qty
+let activeCat = ALL, query = "";
+const $ = id => document.getElementById(id);
+const fmt = n => n.toLocaleString("ar-EG") + " " + CURRENCY;
+
+function renderChips(){
+  $("chips").innerHTML = [[ALL,""], ...MENU.map(c => [c.cat, c.icon])].map(([c, ic]) =>
+    `<button class="chip" aria-pressed="${c===activeCat}" data-cat="${c}">${ic} ${c}</button>`).join("");
+}
+
+function card(i){
+  const k = sel[i.id] || 0, price = i.opts[k][1];
+  const chips = i.opts.length > 1 ? `<div class="opts">${i.opts.map(([l], j) =>
+    `<button class="opt" aria-pressed="${j===k}" data-sel="${i.id}|${j}">${l}</button>`).join("")}</div>` : "";
+  return `<article class="item"><div class="info"><h3>${i.name}</h3>${i.desc ? `<p>${i.desc}</p>` : ""}${chips}
+    <div class="row"><span class="price">${fmt(price)}</span>
+    <button class="add" data-add="${i.id}" aria-label="أضف ${i.name}">+ أضف</button></div></div></article>`;
+}
+
+function renderMenu(){
+  const q = query.trim(); let html = "", n = 0;
+  MENU.forEach(c => {
+    if(activeCat !== ALL && c.cat !== activeCat) return;
+    const list = ITEMS.filter(i => i.cat === c.cat && (i.name + i.desc).includes(q));
+    if(!list.length) return;
+    n += list.length;
+    html += `<section><h2 class="cat">${c.icon} ${c.cat}</h2><div class="grid">${list.map(card).join("")}</div></section>`;
+  });
+  $("grid").innerHTML = html;
+  $("empty").hidden = n > 0;
+}
+
+function summary(){
+  const rows = Object.entries(cart).map(([k, q]) => {
+    const [id, j] = k.split("|"), it = ITEMS[id], [l, p] = it.opts[j];
+    return {k, q, price: p, name: it.name + (l ? ` (${l})` : "")};
+  });
+  return {rows, count: rows.reduce((s,r) => s+r.q, 0), total: rows.reduce((s,r) => s+r.q*r.price, 0)};
+}
+
+function renderCart(){
+  const {rows, count, total} = summary();
+  $("bar").classList.toggle("on", count > 0);
+  $("barTxt").textContent = `${count.toLocaleString("ar-EG")} صنف · ${fmt(total)}`;
+  $("lines").innerHTML = rows.map(r => `
+    <div class="line"><span>${r.name}</span>
+      <span class="qty"><button data-dec="${r.k}" aria-label="قلّل">−</button><span>${r.q.toLocaleString("ar-EG")}</span><button data-inc="${r.k}" aria-label="زوّد">+</button></span>
+    </div>`).join("");
+  $("total").textContent = fmt(total);
+  const msg = "طلب جديد:\n" + rows.map(r => `• ${r.name} × ${r.q}`).join("\n") + `\nالإجمالي: ${total} ${CURRENCY}`;
+  $("wa").href = `https://wa.me/${PHONE}?text=${encodeURIComponent(msg)}`;
+  if(count === 0 && $("dlg").open) $("dlg").close();
+}
+
+document.addEventListener("click", e => {
+  const d = e.target.dataset;
+  if(d.cat){ activeCat = d.cat; renderChips(); renderMenu(); }
+  if(d.sel){ const [id, j] = d.sel.split("|"); sel[id] = +j; renderMenu(); }
+  if(d.add){ const k = d.add + "|" + (sel[d.add] || 0); cart[k] = (cart[k] || 0) + 1; renderCart(); }
+  if(d.inc){ cart[d.inc]++; renderCart(); }
+  if(d.dec){ if(--cart[d.dec] <= 0) delete cart[d.dec]; renderCart(); }
+});
+$("q").addEventListener("input", e => { query = e.target.value; renderMenu(); });
+$("open").onclick = () => $("dlg").showModal();
+$("close").onclick = () => $("dlg").close();
+
+renderChips(); renderMenu(); renderCart();
+</script>
+</body>
+</html>
